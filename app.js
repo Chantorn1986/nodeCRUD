@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./db/db.js');
+const db = require('./db/db');
 const multer = require('multer');
+const ecatalogAdmin = require('./routers/ecatalog/admin')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -19,8 +20,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/ecatalog/admin', require('./routes/ecatalog/admin'));
-app.use('/ecatalog/user', require('./routes/ecatalog/user'));
+app.use('/ecatalog/admin', ecatalogAdmin);
+app.use('/ecatalog/user', require('./routers/ecatalog/user'));
 
 app.get('/', (req, res) => {
     const sql = "SELECT * FROM products";

@@ -1,24 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const mysql = require('mysql2');
+const db = require('./db/db.js');
 const multer = require('multer');
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'nodejs_db'
-})
-
-db.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        return;
-    }
-
-    console.log('Connected to MySQL database successfully.');
-})
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -34,6 +18,9 @@ const upload = multer({ storage });
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/ecatalog/admin', require('./routes/ecatalog/admin'));
+app.use('/ecatalog/user', require('./routes/ecatalog/user'));
 
 app.get('/', (req, res) => {
     const sql = "SELECT * FROM products";

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
-const{index} = require('../../controllers/ecatalog/admin')
+const{index} = require('../controllers/ecatalog/admin')
 
 router.get('/', index)
 

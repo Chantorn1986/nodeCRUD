@@ -2,7 +2,7 @@
 const express = require('express');
 // 2. สร้าง Router instance
 const router = express.Router(); 
-
+const path = require('path');
 const db = require('../db/db');
 const multer = require('multer');
 

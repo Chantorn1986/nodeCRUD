@@ -7,73 +7,8 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/ecatalog/admin', require('./routes/adminEcatalog.js'));
-
-// app.use('/ecatalog/user', require('./routes/userEcatalog.js'));
-
-app.use('/', require('./routes/index.js'));
-// app.get('/', (req, res) => {
-//     const sql = "SELECT * FROM products";
-
-//     db.query(sql, (err, results) => {
-//         if (err) throw err;
-
-//         res.render('home', { 
-//             title: 'Home',
-//             products: results
-//         });
-//     })
-// });
-
-// app.get('/create', (req, res) => {
-//     res.render('create');
-// })
-
-// app.post('/create', upload.single('image'), (req, res) => {
-//     const { name, description } = req.body;
-//     const image = req.file ? req.file.filename : null;
-
-//     const sql = "INSERT INTO products (name, description, image) VALUES(?, ?, ?)";
-//     db.query(sql, [name, description, image], (err, result) => {
-//         if (err) throw err;
-//         res.redirect('/');
-//     })
-// })
-
-// app.get('/edit/:id', (req, res) => {
-//     const sql = "SELECT * FROM products WHERE id = ?";
-//     db.query(sql, [req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.render('edit', { product: result[0] });
-//     });
-// })
-
-// app.post('/edit/:id', upload.single('image'), (req, res) => {
-//     const { name, description } = req.body;
-//     const image = req.file ? req.file.filename : req.body.oldImage;
-
-//     const sql = "UPDATE products SET name = ?, description = ?, image = ? WHERE id = ?";
-//     db.query(sql, [name, description, image, req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.redirect('/');
-//     })
-// })
-
-// app.get('/delete/:id', (req, res) => {
-//     const sql = "DELETE FROM products WHERE id = ?";
-//     db.query(sql, [req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.redirect('/');
-//     });
-// })
-
-// app.get('/about', (req, res) => {
-//     res.render('about', { title: 'About'});
-// });
-
-// app.get('/contact', (req, res) => {
-//     res.render('contact', { title: 'Contact'});
-// });
+app.use('/crud', require('./routes/index.js'));
+app.use('/', require('./routes/ecatalog.js'));
 
 app.listen(3000, () => {
     console.log("Server is running...");

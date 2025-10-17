@@ -5,5 +5,4 @@ const{index} = require('../controllers/ecatalog/admin')
 
 router.get('/', index)
 
-
 module.exports = router;

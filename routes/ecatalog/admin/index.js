@@ -4,9 +4,6 @@ const express = require('express');
 const router = express.Router(); 
 
 router.get('/', (req, res) => {
-    res.render('ecatalog/user/index', { title: 'Index User'});
-});
-router.get('/', (req, res) => {
     res.render('ecatalog/admin/index', { title: 'Index Admin'});
 });
 

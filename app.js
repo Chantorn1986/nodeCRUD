@@ -15,14 +15,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.use(express.json());
 app.set('view engine', 'ejs');
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/ecatalog/admin', require('./routes/adminEcatalog'));
+// app.use('/ecatalog/admin', require('./routes/adminEcatalog.js'));
 
-app.use('/ecatalog/user', require('./routes/userEcatalog'));
+// app.use('/ecatalog/user', require('./routes/userEcatalog.js'));
 
+app.use('/i', require('./routes/index.js'));
 app.get('/', (req, res) => {
     const sql = "SELECT * FROM products";
 

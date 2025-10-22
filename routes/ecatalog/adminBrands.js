@@ -1,18 +1,27 @@
 // 1. นำเข้า Express
 const express = require('express');
+
 // 2. สร้าง Router instance
 const router = express.Router();
-const db = require("../../../db/db");
+router.use(express.urlencoded({ extended: true }));
+const db = require("../../db/db");
 const { v4: uuidv4 } = require("uuid");
 const moment = require('moment');
-const { uploadBrands }= require('../../../middlewares/callFunction');
-
+const { uploadBrands }= require('../../middlewares/callFunction');
 
 router.get('/', async (req, res) => {
   try {
-    res.render('ecatalog/admin/index', {
-      title: 'Admin Catalog'
-    })
+    const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
+    await db.execute(sqlGetAll, (err, results) => {
+      if (err) {
+        return;
+      }
+      res.render('ecatalog/admin/brands', {
+        title: 'Brands Management',
+        brands: results,
+        brandJson: JSON.stringify(results)
+      });
+    });
   } catch (err) {
     console.error('Error list data :', err)
     res.status(500).json({ error: 'List departments invalid.' })
@@ -38,7 +47,7 @@ router.get('/brands', async (req, res) => {
   }
 });
 
-router.get('/brands/Add', async (req, res) => {
+router.get('/Add', async (req, res) => {
   try {
     const sqlMaxNo = "SELECT IFNULL(MAX(`no`), 0) as `max`  FROM `eCatalogBrands`";
     await db.execute(sqlMaxNo, (err, result) => {
@@ -58,7 +67,7 @@ router.get('/brands/Add', async (req, res) => {
   }
 });
 
-router.post('/brands/Add',uploadBrands, async (req, res) => {
+router.post('/Add',uploadBrands, async (req, res) => {
   try {
     const { brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, linkMain, brandsYear, brandsCreatedAt, brandsUpdatedAt } = req.body;
     const image = req.file ? req.file.filename : null;
@@ -98,7 +107,7 @@ router.post('/brands/Add',uploadBrands, async (req, res) => {
   }
 });
 
-router.get('/brands/Edit/:id', async (req, res) => {
+router.get('/Edit/:id', async (req, res) => {
   try {
     const sqlSelectOne = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands` WHERE `id` = ?"
     await db.execute(sqlSelectOne, [req.params.id],
@@ -123,7 +132,7 @@ router.get('/brands/Edit/:id', async (req, res) => {
   }
 });
 
-router.post('/brands/Edit/:id',uploadBrands, async (req, res) => {
+router.post('/Edit/:id',uploadBrands, async (req, res) => {
   try {
     const { brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, linkMainE, brandsYearE, brandsCreatedAtE, brandsUpdatedAtE } = req.body;
     const sqlUpdate = "UPDATE `eCatalogBrands` SET `no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`img`=?,`year`=?,`linkMain`=?,`updatedAt`=? WHERE `id` = ?"
@@ -163,7 +172,7 @@ router.post('/brands/Edit/:id',uploadBrands, async (req, res) => {
   }
 });
 
-router.get('/brands/Del/:id', async (req, res) => {
+router.get('/Del/:id', async (req, res) => {
   try {
     const sqlDelete = "DELETE FROM `eCatalogBrands` WHERE `id` = ?"
     await db.execute(sqlDelete,

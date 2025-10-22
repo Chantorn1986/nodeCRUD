@@ -1,10 +1,10 @@
 // 1. นำเข้า Express
 const express = require('express');
 // 2. สร้าง Router instance
-const router = express.Router(); 
+const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('ecatalog/admin/index', { title: 'Index Admin'});
+  res.render('ecatalog/admin/index', { title: 'Index Admin' });
 });
 
 // 4. ส่งออก Router

@@ -7,25 +7,17 @@ const { v4: uuidv4 } = require("uuid");
 const moment = require('moment');
 const { uploadBrands }= require('../../../middlewares/callFunction');
 
-// นำเข้า Controller ที่เราเขียนไว้
-const brandsController = require('../../../controllers/brands'); 
 
-// กำหนดเส้นทาง
-// GET /api/products -> เรียกใช้ Controller: getAllProducts
-// router.get('/', productController.getAllProducts);
-
-// router.get('/', async (req, res) => {
-//   try {
-//     res.render('ecatalog/admin/index', {
-//       title: 'Admin Catalog'
-//     })
-//   } catch (err) {
-//     console.error('Error list data :', err)
-//     res.status(500).json({ error: 'List departments invalid.' })
-//   }
-// });
-
-router.get('/',brandsController.getAllBrands);
+router.get('/', async (req, res) => {
+  try {
+    res.render('ecatalog/admin/index', {
+      title: 'Admin Catalog'
+    })
+  } catch (err) {
+    console.error('Error list data :', err)
+    res.status(500).json({ error: 'List departments invalid.' })
+  }
+});
 
 router.get('/brands', async (req, res) => {
   try {

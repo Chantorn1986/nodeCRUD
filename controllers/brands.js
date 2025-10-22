@@ -63,8 +63,6 @@ const createNewProduct = async (req, res) => {
 
 // ส่งออก Controller เพื่อให้ Router นำไปใช้
 module.exports = {
-  getAllProducts,
-  createNewProduct,
   getAllBrands
   // ... ฟังก์ชันอื่น ๆ เช่น updateProduct, deleteProduct
 };

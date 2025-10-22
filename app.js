@@ -7,11 +7,11 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/crud', require('./routes/index.js'));
+app.use('/crud', require('./routes/index'));
 
-app.use('/', require('./routes/ecatalog/user/index.js'));
-app.use('/admin', require('./routes/ecatalog/admin/index.js'));
-app.use('/adminBrands', require('./routes/ecatalog/admin/brands.js'));
+app.use('/', require('./routes/ecatalog/user/index'));
+app.use('/admin', require('./routes/ecatalog/admin/index'));
+app.use('/adminBrands', require('./routes/ecatalog/admin/brands'));
 
 app.listen(3000, () => {
   console.log("Server is running...");

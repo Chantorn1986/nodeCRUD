@@ -10,10 +10,10 @@ const { v4: uuidv4 } = require("uuid");
 const moment = require('moment');
 const { uploadBrands } = require('../middlewares/callFunction');
 
-router.get('/', (req, res) => {
+router.get('/brands', async (req, res) => {
   try {
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
-    db.query(sqlGetAll, (err, results) => {
+    await db.query(sqlGetAll, (err, results) => {
       if (err) throw err;
       res.render('ecatalog/admin/brands', {
         title: 'Brands Management',

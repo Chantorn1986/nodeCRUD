@@ -58,7 +58,7 @@ router.get('/brands/Add', async (req, res) => {
   }
 });
 
-router.post('/brands/Add',uploadBrands, async (req, res) => {
+router.post('/brands/Add', async (req, res) => {
   try {
     const { brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, linkMain, brandsYear, brandsCreatedAt, brandsUpdatedAt } = req.body;
     const image = req.file ? req.file.filename : null;
@@ -123,7 +123,7 @@ router.get('/brands/Edit/:id', async (req, res) => {
   }
 });
 
-router.post('/brands/Edit/:id',uploadBrands, async (req, res) => {
+router.post('/brands/Edit/:id', async (req, res) => {
   try {
     const { brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, linkMainE, brandsYearE, brandsCreatedAtE, brandsUpdatedAtE } = req.body;
     const sqlUpdate = "UPDATE `eCatalogBrands` SET `no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`img`=?,`year`=?,`linkMain`=?,`updatedAt`=? WHERE `id` = ?"

@@ -7,6 +7,8 @@ const path = require('path');
 const db = require('../db/db');
 const multer = require('multer');
 
+const {adminBrands} = require('../controllers/index')
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/uploads/');
@@ -19,17 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // 3. กำหนดเส้นทาง (Routes)
-router.get('/t', (req, res) => {
-  const sql = "SELECT * FROM `eCatalogBrands`";
-
-  db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.render('home', {
-      title: 'Home',
-      products: results
-    });
-  })
-});
+router.get('/admin/brands', adminBrands);
 
 router.get('/ecat', (req, res) => {
   res.render('ecatalog/user/index', { title: 'E-Catalog' });

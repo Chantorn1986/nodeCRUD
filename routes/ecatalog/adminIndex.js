@@ -18,11 +18,19 @@ router.get('/brands', (req, res) => {
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
     db.query(sqlGetAll, (err, results) => {
       if (err) throw err;
-      res.render('ecatalog/admin/brands', {
+      // res.render('ecatalog/admin/brands', {
+      //   title: 'Brands Management',
+      //   brands: results,
+      //   brandJson: JSON.stringify(results)
+      // });
+            const data = [
+        {
         title: 'Brands Management',
         brands: results,
-        brandJson: JSON.stringify(results)
-      });
+        // brandJson: JSON.stringify(results)
+        }
+      ]
+      res.json(data)
     });
   } catch (err) {
     console.error('Error list data :', err)
@@ -35,12 +43,21 @@ router.get('/brands/Add', (req, res) => {
     const sqlMaxNo = "SELECT IFNULL(MAX(`no`), 0) as `max`  FROM `eCatalogBrands`";
     db.query(sqlMaxNo, (err, result) => {
       if (err) throw err;
-      res.render('ecatalog/admin/brandsAdd', {
-        title: 'Brands Management',
-        maxNo: result[0]['max'] + 1,
-        updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
-        year: moment(new Date()).format('YYYY')
-      });
+      // res.render('ecatalog/admin/brandsAdd', {
+      //   title: 'Brands Management',
+      //   maxNo: result[0]['max'] + 1,
+      //   updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
+      //   year: moment(new Date()).format('YYYY')
+      // });
+      const data = [
+        {
+          title: 'Brands Management',
+          maxNo: result[0]['max'] + 1,
+          updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
+          year: moment(new Date()).format('YYYY')
+        }
+      ];
+      res.json(data)
     });
   } catch (err) {
     console.error('Error get data :', err)

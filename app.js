@@ -9,11 +9,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/crud', require('./routes/index'));
 
-app.use('/', require('./routes/ecatalog/userIndex'));
-app.use('/admin', require('./routes/ecatalog/adminIndex'));
-//app.use('/adminBrands', require('./routes/ecatalog/adminBrands'));
-
-app.use('/admin/brands', require('./routes/brandsEcatalogB'));
+// app.use('/admin', require('./routes/ecatalog/adminIndex'));
+app.use('/', require('./routes/ecatalog'));
 
 app.listen(3000, () => {
   console.log("Server is running...");

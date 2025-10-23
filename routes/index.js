@@ -24,13 +24,17 @@ router.get('/t', (req, res) => {
 
   db.query(sql, (err, results) => {
     if (err) throw err;
-    res.json(results);
-    // res.render('home', {
-    //   title: 'Home',
-    //   products: results
-    // });
+    res.render('home', {
+      title: 'Home',
+      products: results
+    });
   })
 });
+
+router.get('/ecat', (req, res) => {
+  res.render('ecatalog/user/index', { title: 'E-Catalog' });
+});
+
 
 router.get('/', (req, res) => {
   const sql = "SELECT * FROM products";

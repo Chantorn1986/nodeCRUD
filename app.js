@@ -7,10 +7,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/crud', require('./routes/index'));
-
-// app.use('/admin', require('./routes/ecatalog/adminIndex'));
-app.use('/', require('./routes/ecatalog'));
+app.use('/', require('./routes/index'));
 
 app.listen(3000, () => {
   console.log("Server is running...");

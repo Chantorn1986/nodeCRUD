@@ -5,10 +5,10 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-const db = require("../../db/db");
+const db = require("../db/db");
 const { v4: uuidv4 } = require("uuid");
 const moment = require('moment');
-const { uploadBrands } = require('../../middlewares/callFunction');
+const { uploadBrands } = require('../middlewares/callFunction');
 
 router.get('/', (req, res) => {
   try {
@@ -27,22 +27,6 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/brands', (req, res) => {
-  try {
-    const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
-    db.query(sqlGetAll, (err, results) => {
-      if (err) throw err;
-      res.render('ecatalog/admin/brands', {
-        title: 'Brands Management',
-        brands: results,
-        brandJson: JSON.stringify(results)
-      });
-    });
-  } catch (err) {
-    console.error('Error list data :', err)
-    res.status(500).json({ error: 'List brands invalid.' })
-  }
-});
 
 router.get('/Add', (req, res) => {
   try {

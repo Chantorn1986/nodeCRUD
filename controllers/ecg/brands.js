@@ -5,72 +5,28 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 const path = require('path');
-const db = require('../db/db');
+const db = require('../../db/db');
 const moment = require('moment');
-const { uploadBrands,nano36 } = require('../middlewares/callFunction');
-const {getAll,getAdd,postAdd,getEdit,postEdit,getDel} = require('../controllers/ecg/brands')
+const { uploadBrands, nano36 } = require('../../middlewares/callFunction');
 
-router.get('/', (req, res) => {
-    try {
-    // const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
-    // db.query(sqlGetAll, (err, results) => {
-    //   if (err) {
-    //     return;
-    //   }
-    //   res.render('ecatalog/admin/brands', {
-    //     title: 'Brands Management',
-    //     brands: results,
-    //     brandJson: JSON.stringify(results)
-    //   });
-    // });
-    res.render('ecatalog/admin/index', { title: 'Index Admin' });
-  } catch (err) {
-    console.error('Error list data :', err)
-    res.status(500).json({ error: 'Index Admin invalid.' })
-  }
-});
-
-router.get('/admin', (req, res) => {
-  res.render('ecatalog/admin/index', { title: 'Index Admin' });
-});
-
-router.get('/api/brands', (req, res) => {
+exports.getAll = async (req, res) => {
   try {
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
-    db.query(sqlGetAll, (err, results) => {
+    await db.execute(sqlGetAll, (err, results) => {
       if (err) throw err;
-      const data = [{
+      res.render('ecatalog/admin/brands', {
         title: 'Brands Management',
-        brands: results
-        }]
-      res.json(data)
+        brands: results,
+        brandJson: JSON.stringify(results)
+      });
     });
   } catch (err) {
     console.error('Error list data :', err)
     res.status(500).json({ error: 'List departments invalid.' })
   }
-});
+}
 
-router.get('/brands', getAll);
-
-// router.get('/brands',async (req, res) => {
-//   try {
-//     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
-//     await db.execute(sqlGetAll, (err, results) => {
-//       if (err) throw err;
-//       res.render('ecatalog/admin/brands', {
-//         title: 'Brands Management',
-//         brands: results,
-//         brandJson: JSON.stringify(results)
-//       });
-//     });
-//   } catch (err) {
-//     console.error('Error list data :', err)
-//     res.status(500).json({ error: 'List departments invalid.' })
-//   }
-// });
-
-router.get('/brands/Add',async (req, res) => {
+exports.getAdd = async (req, res) => {
   try {
     const sqlMaxNo = "SELECT IFNULL(MAX(`no`), 0) as `max`  FROM `eCatalogBrands`";
     await db.execute(sqlMaxNo, (err, result) => {
@@ -83,10 +39,10 @@ router.get('/brands/Add',async (req, res) => {
       });
       const data = [
         {
-        title: 'Brands Management',
-        maxNo: result[0]['max'] + 1,
-        updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
-        year: moment(new Date()).format('YYYY')
+          title: 'Brands Management',
+          maxNo: result[0]['max'] + 1,
+          updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
+          year: moment(new Date()).format('YYYY')
         }
       ];
       res.json(data)
@@ -95,9 +51,9 @@ router.get('/brands/Add',async (req, res) => {
     console.error('Error get data :', err)
     res.status(500).json({ error: 'Get create brands invalid.' })
   }
-});
+}
 
-router.post('/brands/Add', uploadBrands, async (req, res) => {
+exports.postAdd = async (req, res) => {
   try {
     const { brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, linkMain, brandsYear, brandsCreatedAt, brandsUpdatedAt } = req.body;
     const image = req.file ? req.file.filename : null;
@@ -109,39 +65,39 @@ router.post('/brands/Add', uploadBrands, async (req, res) => {
         [nano36, brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, image, brandsYear, linkMain, brandsUpdatedAt]
         , (err, resultAdd) => {
           if (err) throw err;
-          return ;
+          return;
         });
       await db.execute(sqlGetAll, (err, results) => {
-            if (err) throw err;
-            res.render('ecatalog/admin/brands', {
-              title: 'Brands Management',
-              brands: results,
-              brandJson: JSON.stringify(results)
-            });
-          });
+        if (err) throw err;
+        res.render('ecatalog/admin/brands', {
+          title: 'Brands Management',
+          brands: results,
+          brandJson: JSON.stringify(results)
+        });
+      });
     } else {
       await db.execute(sqlInsert_NoPic,
         [nano36, brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, brandsYear, linkMain, brandsUpdatedAt]
         , (err, resultAdd) => {
           if (err) throw err;
-          return ;
+          return;
         });
       await db.execute(sqlGetAll, (err, results) => {
         if (err) throw err;
-            res.render('ecatalog/admin/brands', {
-              title: 'Brands Management',
-              brands: results,
-              brandJson: JSON.stringify(results)
-            });
-          });
+        res.render('ecatalog/admin/brands', {
+          title: 'Brands Management',
+          brands: results,
+          brandJson: JSON.stringify(results)
+        });
+      });
     }
   } catch (err) {
     console.error('Error post data :', err)
     res.status(500).json({ error: 'Post create brands invalid.' })
   }
-});
+}
 
-router.get('/brands/Edit/:id', async (req, res) => {
+exports.getEdit = async (req, res) => {
   try {
     const sqlSelectOne = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands` WHERE `id` = ?"
     await db.execute(sqlSelectOne, [req.params.id],
@@ -162,9 +118,9 @@ router.get('/brands/Edit/:id', async (req, res) => {
     console.error('Error get data :', err)
     res.status(500).json({ error: 'Get update brands invalid.' })
   }
-});
+}
 
-router.post('/brands/Edit/:id', uploadBrands, async (req, res) => {
+exports.postEdit = async (req, res) => {
   try {
     const { brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, linkMainE, brandsYearE, brandsCreatedAtE, brandsUpdatedAtE } = req.body;
     const sqlUpdate = "UPDATE `eCatalogBrands` SET `no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`img`=?,`year`=?,`linkMain`=?,`updatedAt`=? WHERE `id` = ?"
@@ -175,41 +131,41 @@ router.post('/brands/Edit/:id', uploadBrands, async (req, res) => {
         [brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, image, brandsYearE, linkMainE, brandsUpdatedAtE, req.params.id]
         , (err, resultUpdate) => {
           if (err) throw err;
-          return ;
+          return;
         });
       const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
       await db.execute(sqlGetAll, (err, results) => {
-            if (err) throw err;
-            res.render('ecatalog/admin/brands', {
-              title: 'Brands Management',
-              brands: results,
-              brandJson: JSON.stringify(results)
-            });
-          });
+        if (err) throw err;
+        res.render('ecatalog/admin/brands', {
+          title: 'Brands Management',
+          brands: results,
+          brandJson: JSON.stringify(results)
+        });
+      });
     } else {
       await db.execute(sqlUpdateNoImg,
         [brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, brandsYearE, linkMainE, brandsUpdatedAtE, req.params.id]
         , (err, resultUpdate) => {
           if (err) throw err;
-          return ;
+          return;
         });
       const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
       await db.execute(sqlGetAll, (err, results) => {
-            if (err) throw err;
-            res.render('ecatalog/admin/brands', {
-              title: 'Brands Management',
-              brands: results,
-              brandJson: JSON.stringify(results)
-            });
-          });
+        if (err) throw err;
+        res.render('ecatalog/admin/brands', {
+          title: 'Brands Management',
+          brands: results,
+          brandJson: JSON.stringify(results)
+        });
+      });
     }
   } catch (err) {
     console.error('Error get data :', err)
     res.status(500).json({ error: 'Get update brands invalid.' })
   }
-});
+}
 
-router.get('/brands/Del/:id',async (req, res) => {
+exports.getDel = async (req, res) => {
   try {
     const sqlDelete = "DELETE FROM `eCatalogBrands` WHERE `id` = ?"
     await db.execute(sqlDelete,
@@ -220,17 +176,15 @@ router.get('/brands/Del/:id',async (req, res) => {
       });
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
     await db.execute(sqlGetAll, (err, results) => {
-          if (err) throw err;
-          res.render('ecatalog/admin/brands', {
-            title: 'Brands Management',
-            brands: results,
-            brandJson: JSON.stringify(results)
-          });
-        });
+      if (err) throw err;
+      res.render('ecatalog/admin/brands', {
+        title: 'Brands Management',
+        brands: results,
+        brandJson: JSON.stringify(results)
+      });
+    });
   } catch (err) {
     console.error('Error get remove data :', err)
     res.status(500).json({ error: 'Get remove brands invalid.' })
   }
-});
-// 4. ส่งออก Router
-module.exports = router;
+}

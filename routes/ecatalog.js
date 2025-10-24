@@ -3,10 +3,11 @@ const express = require('express');
 
 // 2. สร้าง Router instance
 const router = express.Router();
-// router.use(express.urlencoded({ extended: true }));
-const db = require("../db/db");
+router.use(express.json());
+const path = require('path');
+const db = require('../db/db');
 const moment = require('moment');
-const { uploadBrands } = require('../middlewares/callFunction');
+const { uploadBrands,nano36 } = require('../middlewares/callFunction');
 
 router.get('/', (req, res) => {
     try {
@@ -21,10 +22,10 @@ router.get('/', (req, res) => {
     //     brandJson: JSON.stringify(results)
     //   });
     // });
-    res.render('ecatalog/user/index', { title: 'Index User' });
+    res.render('ecatalog/admin/index', { title: 'Index Admin' });
   } catch (err) {
     console.error('Error list data :', err)
-    res.status(500).json({ error: 'Index User invalid.' })
+    res.status(500).json({ error: 'Index Admin invalid.' })
   }
   
 });

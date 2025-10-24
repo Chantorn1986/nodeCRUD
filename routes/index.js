@@ -186,7 +186,6 @@ router.post('/brands/Edit/:id', uploadBrands, async (req, res) => {
   }
 });
 
-
 router.get('/brands/Del/:id',async (req, res) => {
   try {
     const sqlDelete = "DELETE FROM `eCatalogBrands` WHERE `id` = ?"
@@ -210,6 +209,7 @@ router.get('/brands/Del/:id',async (req, res) => {
     res.status(500).json({ error: 'Get remove brands invalid.' })
   }
 });
+
 // 3. กำหนดเส้นทาง (Routes)
 router.get('/test', (req, res) => {
   const sql = "SELECT * FROM products";

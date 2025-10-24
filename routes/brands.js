@@ -5,8 +5,6 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-const db = require("../db/db");
-const { v4: uuidv4 } = require("uuid");
 const moment = require('moment');
 const { uploadBrands } = require('../middlewares/callFunction');
 

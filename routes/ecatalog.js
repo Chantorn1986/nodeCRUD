@@ -7,8 +7,9 @@ router.use(express.json());
 const path = require('path');
 const db = require('../db/db');
 const moment = require('moment');
-const { uploadBrands} = require('../middlewares/callFunction');
-const {getAll,getAdd,postAdd,getEdit,postEdit,getDel} = require('../controllers/ecg/brands')
+const { uploadBrands , uploadTypeProducts } = require('../middlewares/callFunction');
+const {getAllBrands,getAddBrands,postAddBrands,getEditBrands,postEditBrands,getDelBrands} = require('../controllers/ecg/brands')
+const {getAllTypeProducts,getAddTypeProducts,postAddTypeProducts,getEditTypeProducts,postEditTypeProducts,getDelTypeProducts} = require('../controllers/ecg/typeProducts')
 
 router.get('/', (req, res) => {
     try {
@@ -51,12 +52,21 @@ router.get('/api/brands', (req, res) => {
   }
 });
 
-router.get('/brands', getAll);
-router.get('/brands/Add', getAdd);
-router.post('/brands/Add',uploadBrands, postAdd);
-router.get('/brands/Edit/:id', getEdit);
-router.post('/brands/Edit/:id',uploadBrands, postEdit);
-router.get('/brands/Del/:id', getDel);
+router.get('/brands', getAllBrands);
+router.get('/brands/Add', getAddBrands);
+router.post('/brands/Add',uploadBrands, postAddBrands);
+router.get('/brands/Edit/:id', getEditBrands);
+router.post('/brands/Edit/:id',uploadBrands, postEditBrands);
+router.get('/brands/Del/:id', getDelBrands);
+
+router.get('/typeProducts', getAllTypeProducts);
+router.get('/typeProducts/Add', getAddTypeProducts);
+router.post('/typeProducts/Add',uploadTypeProducts, postAddTypeProducts);
+router.get('/typeProducts/Edit/:id', getEditTypeProducts);
+router.post('/typeProducts/Edit/:id',uploadTypeProducts, postEditTypeProducts);
+router.get('/typeProducts/Del/:id', getDelTypeProducts);
+
+
 
 // router.get('/brands',async (req, res) => {
 //   try {

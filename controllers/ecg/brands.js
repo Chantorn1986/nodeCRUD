@@ -3,7 +3,7 @@ const db = require('../../db/db');
 const moment = require('moment');
 const { nano36 } = require('../../middlewares/callFunction');
 
-exports.getAll = async (req, res) => {
+exports.getAllBrands = async (req, res) => {
   try {
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
     await db.execute(sqlGetAll, (err, results) => {
@@ -16,17 +16,17 @@ exports.getAll = async (req, res) => {
     });
   } catch (err) {
     console.error('Error list data :', err)
-    res.status(500).json({ error: 'List departments invalid.' })
+    res.status(500).json({ error: 'List brands invalid.' })
   }
 }
 
-exports.getAdd = async (req, res) => {
+exports.getAddBrands = async (req, res) => {
   try {
     const sqlMaxNo = "SELECT IFNULL(MAX(`no`), 0) as `max`  FROM `eCatalogBrands`";
     await db.execute(sqlMaxNo, (err, result) => {
       if (err) throw err;
       res.render('ecatalog/admin/brandsAdd', {
-        title: 'Brands Management',
+        title: 'Brands Creact',
         maxNo: result[0]['max'] + 1,
         updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
         year: moment(new Date()).format('YYYY')
@@ -38,7 +38,7 @@ exports.getAdd = async (req, res) => {
   }
 }
 
-exports.postAdd = async (req, res) => {
+exports.postAddBrands = async (req, res) => {
   try {
     const { brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, linkMain, brandsYear, brandsCreatedAt, brandsUpdatedAt } = req.body;
     const image = req.file ? req.file.filename : null;
@@ -82,7 +82,7 @@ exports.postAdd = async (req, res) => {
   }
 }
 
-exports.getEdit = async (req, res) => {
+exports.getEditBrands = async (req, res) => {
   try {
     const sqlSelectOne = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands` WHERE `id` = ?"
     await db.execute(sqlSelectOne, [req.params.id],
@@ -105,7 +105,7 @@ exports.getEdit = async (req, res) => {
   }
 }
 
-exports.postEdit = async (req, res) => {
+exports.postEditBrands = async (req, res) => {
   try {
     const { brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, linkMainE, brandsYearE, brandsCreatedAtE, brandsUpdatedAtE } = req.body;
     const sqlUpdate = "UPDATE `eCatalogBrands` SET `no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`img`=?,`year`=?,`linkMain`=?,`updatedAt`=? WHERE `id` = ?"
@@ -150,7 +150,7 @@ exports.postEdit = async (req, res) => {
   }
 }
 
-exports.getDel = async (req, res) => {
+exports.getDelBrands = async (req, res) => {
   try {
     const sqlDelete = "DELETE FROM `eCatalogBrands` WHERE `id` = ?"
     await db.execute(sqlDelete,

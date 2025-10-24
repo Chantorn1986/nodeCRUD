@@ -1,13 +1,7 @@
-// 1. นำเข้า Express
-const express = require('express');
-
 // 2. สร้าง Router instance
-const router = express.Router();
-router.use(express.json());
-const path = require('path');
 const db = require('../../db/db');
 const moment = require('moment');
-const { uploadBrands, nano36 } = require('../../middlewares/callFunction');
+const { nano36 } = require('../../middlewares/callFunction');
 
 exports.getAll = async (req, res) => {
   try {
@@ -37,15 +31,6 @@ exports.getAdd = async (req, res) => {
         updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
         year: moment(new Date()).format('YYYY')
       });
-      const data = [
-        {
-          title: 'Brands Management',
-          maxNo: result[0]['max'] + 1,
-          updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
-          year: moment(new Date()).format('YYYY')
-        }
-      ];
-      res.json(data)
     });
   } catch (err) {
     console.error('Error get data :', err)

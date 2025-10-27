@@ -3,29 +3,13 @@ const express = require('express');
 // 2. สร้าง Router instance
 const router = express.Router();
 router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
-const path = require('path');
-const db = require('../db/db');
-const multer = require('multer');
-const moment = require('moment');
-const { uploadBrands,nano36 } = require('../middlewares/callFunction');
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-})
-
-const upload = multer({ storage });
 
 // 3. กำหนดเส้นทาง (Routes)
 
 router.get('/', (req, res) => {
   res.render('ecatalog/user/index', { title: 'E-Catalog' });
 });
+
 
 // router.get('/admin', (req, res) => {
 //   res.render('ecatalog/admin/index', { title: 'E-Catalog Admin' });

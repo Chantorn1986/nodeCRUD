@@ -41,12 +41,13 @@ exports.postAddBrands = async (req, res) => {
   try {
     const { brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, linkMain, brandsYear, brandsCreatedAt, brandsUpdatedAt } = req.body;
     const image = req.file ? req.file.filename : null;
+    const timestamp = moment(new Date()).format();
     const sqlInsert = "INSERT INTO `eCatalogBrands`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `updatedAt`) VALUES (UUID(),?,?,?,?,?,?,?,?,?,?)"
     const sqlInsert_NoPic = "INSERT INTO `eCatalogBrands`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `year`, `linkMain`, `updatedAt`) VALUES (UUID(),?,?,?,?,?,?,?,?,?)"
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
     if (image) {
       await db.execute(sqlInsert,
-        [ brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, image, brandsYear, linkMain, brandsUpdatedAt]
+        [ brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, image, brandsYear, linkMain, timestamp]
         , (err, resultAdd) => {
           if (err) throw err;
           return;
@@ -61,7 +62,7 @@ exports.postAddBrands = async (req, res) => {
       });
     } else {
       await db.execute(sqlInsert_NoPic,
-        [ brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, brandsYear, linkMain, brandsUpdatedAt]
+        [ brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, brandsYear, linkMain, timestamp]
         , (err, resultAdd) => {
           if (err) throw err;
           return;
@@ -110,9 +111,10 @@ exports.postEditBrands = async (req, res) => {
     const sqlUpdate = "UPDATE `eCatalogBrands` SET `no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`img`=?,`year`=?,`linkMain`=?,`updatedAt`=? WHERE `id` = ?"
     const sqlUpdateNoImg = "UPDATE `eCatalogBrands` SET `no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`year`=?,`linkMain`=?,`updatedAt`=? WHERE `id` = ?"
     const image = req.file ? req.file.filename : null;
+    const timestamp = moment(new Date()).format();
     if (image) {
       await db.execute(sqlUpdate,
-        [brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, image, brandsYearE, linkMainE, brandsUpdatedAtE, req.params.id]
+        [brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, image, brandsYearE, linkMainE, timestamp, req.params.id]
         , (err, resultUpdate) => {
           if (err) throw err;
           return;
@@ -128,7 +130,7 @@ exports.postEditBrands = async (req, res) => {
       });
     } else {
       await db.execute(sqlUpdateNoImg,
-        [brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, brandsYearE, linkMainE, brandsUpdatedAtE, req.params.id]
+        [brandsNoE, brandsCodeE, brandsNameTHE, brandsNameENE, shortKeywordE, keywordE, brandsYearE, linkMainE, timestamp, req.params.id]
         , (err, resultUpdate) => {
           if (err) throw err;
           return;

@@ -40,12 +40,13 @@ exports.postAddTypeProducts = async (req, res) => {
   try {
     const { no, code, nameTH, nameEN, shortKeyword, keyword, img, createdAt } = req.body;
     const image = req.file ? req.file.filename : null;
+    const timestamp = moment(new Date()).format();
     const sqlInsert = "INSERT INTO `eCatalogTypeProducts`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `updatedAt`) VALUES (UUID(),?,?,?,?,?,?,?,?)"
     const sqlInsert_NoPic = "INSERT INTO `eCatalogTypeProducts`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `updatedAt`) VALUES (UUID(),?,?,?,?,?,?,?)"
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `createdAt`, `updatedAt` FROM `eCatalogTypeProducts`";
     if (image) {
       await db.execute(sqlInsert,
-        [ no, code, nameTH, nameEN, shortKeyword, keyword, image, createdAt]
+        [ no, code, nameTH, nameEN, shortKeyword, keyword, image, timestamp]
         , (err, resultAdd) => {
           if (err) throw err;
           return;
@@ -60,7 +61,7 @@ exports.postAddTypeProducts = async (req, res) => {
       });
     } else {
       await db.execute(sqlInsert_NoPic,
-        [ no, code, nameTH, nameEN, shortKeyword, keyword, createdAt]
+        [ no, code, nameTH, nameEN, shortKeyword, keyword, timestamp]
         , (err, resultAdd) => {
           if (err) throw err;
           return;
@@ -109,9 +110,10 @@ exports.postEditTypeProducts = async (req, res) => {
     const sqlUpdate = "UPDATE `eCatalogTypeProducts` SET `id`=?,`no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`img`=?,`updatedAt`=? WHERE `id` = ?"
     const sqlUpdateNoImg = "UPDATE `eCatalogTypeProducts` SET `id`=?,`no`=?,`code`=?,`nameTH`=?,`nameEN`=?,`shortKeyword`=?,`keyword`=?,`updatedAt`=? WHERE `id` = ?"
     const image = req.file ? req.file.filename : null;
+    const timestamp = moment(new Date()).format();
     if (image) {
       await db.execute(sqlUpdate,
-        [noE, codeE, nameTHE, nameENE, shortKeywordE, keywordE, image, createdAtE, req.params.id]
+        [noE, codeE, nameTHE, nameENE, shortKeywordE, keywordE, image, timestamp, req.params.id]
         , (err, resultUpdate) => {
           if (err) throw err;
           return;
@@ -127,7 +129,7 @@ exports.postEditTypeProducts = async (req, res) => {
       });
     } else {
       await db.execute(sqlUpdateNoImg,
-        [noE, codeE, nameTHE, nameENE, shortKeywordE, keywordE, createdAtE, req.params.id]
+        [noE, codeE, nameTHE, nameENE, shortKeywordE, keywordE, timestamp, req.params.id]
         , (err, resultUpdate) => {
           if (err) throw err;
           return;

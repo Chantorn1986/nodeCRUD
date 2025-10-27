@@ -27,17 +27,17 @@
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
+  <div id="wrapper">
 
-      <%- include('../../tabBar/ecatalogLeftSide'); %>
+    <%- include('../../tabBar/ecatalogLeftSide'); %>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
 
-          <!-- Main Content -->
-          <div id="content">
+        <!-- Main Content -->
+        <div id="content">
 
-            <%- include('../../tabBar/ecatalogTopbar'); %>
+          <%- include('../../tabBar/ecatalogTopbar'); %>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -133,9 +133,9 @@
             <!-- /.container-fluid -->
 
             <!-- Logout Modal-->
-            <div class="modal fade" id="dataModalTypeProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog" role="document">
+            <div class="modal fade" id="dataModalTypeProduct" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="typeProductsNameEN">Name (EN)</h5>
@@ -149,21 +149,27 @@
                         <div class="col-6">
                           <strong>No</strong> : <label id="typeProductsNo">-</label><br>
                           <strong>Code</strong> : <label id="typeProductsCode">-</label><br>
+                          <strong>Name (TH)</strong> : <label id="typeProductsNameTH">-</label><br>
                         </div>
                         <div class="col-6">
                           <strong>Image</strong> : <img id="typeProductsImg" class="img" src="" width="100" /><br>
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row mb-2">
                         <div class="col-12">
-                          <strong>Name (TH)</strong> : <label id="typeProductsNameTH">-</label><br>
                           <strong>Keyword</strong> : <label id="typeProductsKeyword">-</label><br>
+                        </div>
+
+                      </div>
+                      <div class="row mb-2">
+                        <div class="col-12">
                           <strong>Short Keyword</strong> : <label id="typeProductsShortKeyword">-</label><br>
                         </div>
+
                       </div>
                       <div class="row">
                         <div class="col-6">
-                          <strong>Created at</strong> :<label id="typeProductsCreatedAt">-</label><br>
+                          <strong>Created at</strong> : <label id="typeProductsCreatedAt">-</label><br>
                         </div>
                         <div class="col-6">
                           <strong>Updated at</strong> : <label id="typeProductsUpdatedAt">-</label><br>
@@ -182,73 +188,73 @@
             </div>
             <!-- End of Main Content -->
 
-          </div>
-          <!-- End of Content Wrapper -->
-            <!-- Footer -->
-            <%- include('../../tabBar/ecatalogFooter'); %>
-              <!-- End of Footer -->
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
+        <!-- Footer -->
+        <%- include('../../tabBar/ecatalogFooter'); %>
+          <!-- End of Footer -->
+      </div>
+      <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#">
-          <i class="fas fa-angle-up"></i>
-        </a>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#">
+        <i class="fas fa-angle-up"></i>
+      </a>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="/vendor/jquery/jquery.min.js"></script>
-        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="/js/sb-admin-2.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+      <!-- Page level plugins -->
+      <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="/js/demo/datatables-demo.js"></script>
-        <script>
-          $(document).on('click', '.view-btn', function () {
-            let dataId = $(this).data('id');
-            let jsonDataSet = `<%- resultsJson %>`;
-            let dataSet = JSON.parse(jsonDataSet);
-            let data = dataSet.find(d => d.id === dataId);
-            if (data) {
-              document.getElementById('typeProductsNameEN').innerText = data.nameEN;
-              document.getElementById('typeProductsNameTH').innerText = data.nameTH;
-              document.getElementById('typeProductsCode').innerText = data.code;
-              document.getElementById('typeProductsKeyword').innerText = data.keyword;  
-              document.getElementById('typeProductsShortKeyword').innerText = data.shortKeyword;
-              document.getElementById('typeProductsNo').innerText = data.no ;
-              document.getElementById('typeProductsImg').src = data.img ? `/uploads/typeProducts/${data.img}` : '/img/NoPic.svg';
-              document.getElementById('typeProductsCreatedAt').innerText = data.createdAt ? formatForDatetimeLocal(data.createdAt) : '-';
-              document.getElementById('typeProductsUpdatedAt').innerText = data.updatedAt ? formatForDatetimeLocal(data.updatedAt) : '-';
-            }
-          });
-
-          function formatForDatetimeLocal(date) {
-            let length = date.length;
-            const yyyy = date.substring(0,4)
-            const mm = date.substring(5,7) // Bulan dimulai dari 0
-            const dd = date.substring(8,10);
-            const hh = date.substring(11,13);
-            const min = date.substring(14,16);
-            return `${dd}/${mm}/${yyyy} , ${hh}:${min}`;
+      <!-- Page level custom scripts -->
+      <script src="/js/demo/datatables-demo.js"></script>
+      <script>
+        $(document).on('click', '.view-btn', function () {
+          let dataId = $(this).data('id');
+          let jsonDataSet = `<%- resultsJson %>`;
+          let dataSet = JSON.parse(jsonDataSet);
+          let data = dataSet.find(d => d.id === dataId);
+          if (data) {
+            document.getElementById('typeProductsNameEN').innerText = data.nameEN;
+            document.getElementById('typeProductsNameTH').innerText = data.nameTH;
+            document.getElementById('typeProductsCode').innerText = data.code;
+            document.getElementById('typeProductsKeyword').innerText = data.keyword;
+            document.getElementById('typeProductsShortKeyword').innerText = data.shortKeyword;
+            document.getElementById('typeProductsNo').innerText = data.no;
+            document.getElementById('typeProductsImg').src = data.img ? `/uploads/typeProducts/${data.img}` : '/img/NoPic.svg';
+            document.getElementById('typeProductsCreatedAt').innerText = data.createdAt ? formatForDatetimeLocal(data.createdAt) : '-';
+            document.getElementById('typeProductsUpdatedAt').innerText = data.updatedAt ? formatForDatetimeLocal(data.updatedAt) : '-';
           }
+        });
 
-          function formatForDate(date) {
-            let length = date.length;
-            const yyyy = date.substring(0,4)
-            const mm = date.substring(5,7) // Bulan dimulai dari 0
-            const dd = date.substring(8,10);
-            return `${dd}/${mm}/${yyyy}`;
-          }
+        function formatForDatetimeLocal(date) {
+          let length = date.length;
+          const yyyy = date.substring(0, 4)
+          const mm = date.substring(5, 7) // Bulan dimulai dari 0
+          const dd = date.substring(8, 10);
+          const hh = date.substring(11, 13);
+          const min = date.substring(14, 16);
+          return `${dd}/${mm}/${yyyy} , ${hh}:${min}`;
+        }
 
-        </script>
+        function formatForDate(date) {
+          let length = date.length;
+          const yyyy = date.substring(0, 4)
+          const mm = date.substring(5, 7) // Bulan dimulai dari 0
+          const dd = date.substring(8, 10);
+          return `${dd}/${mm}/${yyyy}`;
+        }
+
+      </script>
 </body>
 
 </html>

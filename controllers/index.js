@@ -11,3 +11,7 @@ exports.adminBrands = (req, res) => {
     });
   })
 }
+
+      // const isCorrect = await comparePassword(password, user.password);
+
+      // if (isCorrect) {

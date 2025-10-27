@@ -1,7 +1,7 @@
 // 2. สร้าง Router instance
 const db = require('../../../db/db');
 const moment = require('moment');
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 exports.getAllUser = async (req, res) => {
@@ -38,8 +38,7 @@ exports.postAddUser = async (req, res) => {
     const { userName, userEmail, userPassword, userRole, userUpdatedAt } = req.body;
     const sqlInsert = "INSERT INTO `user`(`id`, `name`, `email`, `password`, `role`, `updatedAt`) VALUES (UUID(),?,?,?,?,?)"
     const sqlGetAll = "SELECT `id`, `name`, `email`, `password`, `role`, DATE_FORMAT(`createdAt`, '%d/%m/%Y %H:%i:%s') as `createdAt`,DATE_FORMAT(`updatedAt`, '%d/%m/%Y %H:%i:%s') as `updatedAt` FROM `user` ";
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(userPassword, salt);
+    const hashPassword = await bcrypt.hashSync(userPassword, 10);
     const timestamp = moment(new Date()).format()
     await db.execute(sqlInsert,
       [ userName, userEmail, hashPassword, userRole, timestamp]
@@ -90,8 +89,7 @@ exports.postEditUser = async (req, res) => {
     const sqlUpdate = "UPDATE `user` SET `name`=?,`email`=?,`password`=?,`role`=?,`updatedAt`=? WHERE `id` = ?"
     const timestamp = moment(new Date()).format()
     if(userPasswordE){
-      const salt = await bcrypt.genSalt(10);
-      const hashPassword = await bcrypt.hash(userPasswordE, salt);
+      const hashPassword = await bcrypt.hashSync(userPasswordE, 10);
       await db.execute(sqlUpdate,
       [userNameE, userEmailE, hashPassword, userRoleE,timestamp , req.params.id]
       , (err, resultUpdate) => {

@@ -1,7 +1,6 @@
 // 2. สร้าง Router instance
 const db = require('../../db/db');
 const moment = require('moment');
-const { nano36 } = require('../../middlewares/callFunction');
 
 exports.getAllBrands = async (req, res) => {
   try {
@@ -42,12 +41,12 @@ exports.postAddBrands = async (req, res) => {
   try {
     const { brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, linkMain, brandsYear, brandsCreatedAt, brandsUpdatedAt } = req.body;
     const image = req.file ? req.file.filename : null;
-    const sqlInsert = "INSERT INTO `eCatalogBrands`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `updatedAt`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
-    const sqlInsert_NoPic = "INSERT INTO `eCatalogBrands`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `year`, `linkMain`, `updatedAt`) VALUES (?,?,?,?,?,?,?,?,?,?)"
+    const sqlInsert = "INSERT INTO `eCatalogBrands`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `updatedAt`) VALUES (UUID(),?,?,?,?,?,?,?,?,?,?)"
+    const sqlInsert_NoPic = "INSERT INTO `eCatalogBrands`(`id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `year`, `linkMain`, `updatedAt`) VALUES (UUID(),?,?,?,?,?,?,?,?,?)"
     const sqlGetAll = "SELECT `id`, `no`, `code`, `nameTH`, `nameEN`, `shortKeyword`, `keyword`, `img`, `year`, `linkMain`, `createdAt`, `updatedAt` FROM `eCatalogBrands`";
     if (image) {
       await db.execute(sqlInsert,
-        [nano36, brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, image, brandsYear, linkMain, brandsUpdatedAt]
+        [ brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, image, brandsYear, linkMain, brandsUpdatedAt]
         , (err, resultAdd) => {
           if (err) throw err;
           return;
@@ -62,7 +61,7 @@ exports.postAddBrands = async (req, res) => {
       });
     } else {
       await db.execute(sqlInsert_NoPic,
-        [nano36, brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, brandsYear, linkMain, brandsUpdatedAt]
+        [ brandsNo, brandsCode, brandsNameTH, brandsNameEN, shortKeyword, keyword, brandsYear, linkMain, brandsUpdatedAt]
         , (err, resultAdd) => {
           if (err) throw err;
           return;

@@ -3,6 +3,7 @@ const express = require('express');
 // 2. สร้าง Router instance
 const router = express.Router();
 router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 const path = require('path');
 const db = require('../db/db');
 const multer = require('multer');

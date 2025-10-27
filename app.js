@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 app.use('/ecg', require('./routes/ecatalog'));
-app.use('/brands', require('./routes/brands'));
+app.use('/pac', require('./routes/pac'));
 
 app.listen(3000, () => {
   console.log("Server is running...");

@@ -57,7 +57,6 @@ const storageEmployeeCard = multer.diskStorage({
   }
 })
 
-exports.nano36 = nano36()
 exports.uploadBrands = multer({ storage: storageBrands }).single('file')
 exports.uploadTypeProducts = multer({ storage: storageTypeProducts }).single('file')
 exports.uploadProducts = multer({ storage: storageProducts }).single('file')

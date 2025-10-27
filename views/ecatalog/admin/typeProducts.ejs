@@ -63,55 +63,55 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
-                          <th>No</th>
-                          <th>Code</th>
-                          <th>Name thai</th>
-                          <th>Name English</th>
-                          <th>Keyword</th>
-                          <th>Image</th>
-                          <th class="text-center">Action</th>
+                          <th class="align-middle">No.</th>
+                          <th class="align-middle">Code</th>
+                          <th class="align-middle">Name Thai</th>
+                          <th class="align-middle">Name English</th>
+                          <th class="align-middle">Keyword</th>
+                          <th class="align-middle">Image</th>
+                          <th class="align-middle">Action</th>
                         </tr>
                       </thead>
                       <tfoot>
                         <tr>
-                          <th>No</th>
-                          <th>Code</th>
-                          <th>Name thai</th>
-                          <th>Name English</th>
-                          <th>Keyword</th>
-                          <th>Image</th>
-                          <th class="text-center">Action</th>
+                          <th class="align-middle">No.</th>
+                          <th class="align-middle">Code</th>
+                          <th class="align-middle">Name Thai</th>
+                          <th class="align-middle">Name English</th>
+                          <th class="align-middle">Keyword</th>
+                          <th class="align-middle">Image</th>
+                          <th class="align-middle">Action</th>
                         </tr>
                       </tfoot>
                       <tbody>
                         <% results.forEach(result=> { %>
                           <tr>
-                            <td>
+                            <td class="align-middle">
                               <%= result.no %>
                             </td>
-                            <td>
+                            <td class="align-middle">
                               <%= result.code %>
                             </td>
-                            <td>
+                            <td class="align-middle">
                               <%= result.nameTH %>
                             </td>
-                            <td>
+                            <td class="align-middle">
                               <%= result.nameEN %>
                             </td>
-                            <td>
+                            <td class="align-middle">
                               <%= result.keyword %>
                             </td>
-                            <td class="align-middle text-center">
+                            <td class="align-middle">
                               <% if (result.img) { %>
                                 <img class="img" src="/uploads/typeProducts/<%= result.img %>" width="100" />
                                 <% } else { %>
                                   <img class="img" src="/img/NoPic.svg" width="100" />
                                   <% } %>
                             </td>
-                            <td class="align-middle text-center">
+                            <td class="align-middle">
                               <button data-id="<%= result.id %>" data-toggle="modal" data-target="#dataModalTypeProduct"
                                 class="btn btn-info btn-circle btn-sm view-btn">
                                 <i class="fas fa-eye"></i></button>

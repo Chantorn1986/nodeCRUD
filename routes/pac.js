@@ -5,14 +5,13 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-const { uploadBrands , uploadTypeProducts } = require('../middlewares/callFunction');
 const {getAllUser,getAddUser,postAddUser,getEditUser,postEditUser,getDelUser} = require('../controllers/pac/admin/user')
 
 router.get('/', (req, res) => {
     res.render('pac/user/index', { title: 'PAC' });
 });
 
-router.get('/admin/', (req, res) => {
+router.get('/admin', (req, res) => {
   res.render('pac/admin/index', { title: 'PAC Admin' });
 });
 

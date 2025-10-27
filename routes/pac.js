@@ -15,12 +15,12 @@ router.get('/admin', (req, res) => {
   res.render('pac/admin/index', { title: 'PAC Admin' });
 });
 
-router.get('/admin/user', getAllUser);
-router.get('/admin/user/Add', getAddUser);
-router.post('/admin/user/Add',postAddUser);
-router.get('/admin/user/Edit/:id', getEditUser);
-router.post('/admin/user/Edit/:id',postEditUser);
-router.get('/admin/user/Del/:id', getDelUser);
+router.get('/conf/user', getAllUser);
+router.get('/conf/user/Add', getAddUser);
+router.post('/conf/user/Add',postAddUser);
+router.get('/conf/user/Edit/:id', getEditUser);
+router.post('/conf/user/Edit/:id',postEditUser);
+router.get('/conf/user/Del/:id', getDelUser);
 
 
 

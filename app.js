@@ -25,6 +25,7 @@ app.use('/', require('./routes/index'));
 app.use('/logIO', require('./routes/login'));
 app.use('/ecg', require('./routes/ecatalog'));
 app.use('/pac', require('./routes/pac'));
+app.use('/hrm', require('./routes/hrm'));
 
 app.listen(3000, () => {
   console.log("Server is running...");

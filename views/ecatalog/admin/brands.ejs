@@ -24,6 +24,7 @@
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+  
 </head>
 
 <body id="page-top">
@@ -117,7 +118,7 @@
                                 <i class="fas fa-eye"></i></button>
                               <a href="/ecg/brands/Edit/<%= brand.id %>" class="btn btn-warning btn-circle btn-sm">
                                 <i class="fas fa-pen"></i></a>
-                              <a href="/ecg/brands/Del/<%= brand.id %>" class="btn btn-danger btn-circle btn-sm"
+                              <a href="/ecg/brands/Del/<%= brand.id %>" id="btnBrandsDel" class="btn btn-danger btn-circle btn-sm"
                                 onclick="return confirm('Do you want to delete the data?');">
                                 <i class="fas fa-trash-alt"></i></a>
                             </td>
@@ -146,36 +147,44 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-6">
-                          <strong>Brand No</strong> : <label id="brandsNo">Brand No</label><br>
-                          <strong>Brand Code</strong> : <label id="brandsCode">Brand Code</label><br>
-                          <strong>Brand Name (TH)</strong> : <label id="brandsNameTH">Brand Name (TH)</label><br>
-                          <strong>Date</strong> : <label id="brandsDate">Brand Date</label><br>
+                          <div class="mb-2">
+                            <strong>Brand No</strong> : <label id="brandsNo">Brand No</label>
+                          </div>
+                          <div class="mb-2">
+                            <strong>Brand Code</strong> : <label id="brandsCode">Brand Code</label>
+                          </div>
+                          <div class="mb-2">
+                            <strong>Brand Name (TH)</strong> : <label id="brandsNameTH">Brand Name (TH)</label>
+                          </div>
+                          <div class="mb-2">
+                            <strong>Date</strong> : <label id="brandsDate">Brand Date</label>
+                          </div>
                         </div>
                         <div class="col-6">
-                          <strong>Image</strong> : <img id="brandsImg" class="img" src="" width="100" /><br>
+                          <strong>Image</strong> : <img id="brandsImg" class="img" src="" width="100" />
                         </div>
                       </div>
                       <div class="row mb-2">
                         <div class="col-12">
-                          <strong>Keyword</strong> : <label id="brandsKeyword">Keyword</label><br>
+                          <strong>Keyword</strong> : <label id="brandsKeyword">Keyword</label>
                         </div>
                       </div>
                       <div class="row mb-2">
                         <div class="col-12">
-                          <strong>Short Keyword</strong> : <label id="brandsShortKeyword">Short Keyword</label><br>
+                          <strong>Short Keyword</strong> : <label id="brandsShortKeyword">Short Keyword</label>
                         </div>
                       </div>
                       <div class="row mb-2">
                         <div class="col-12">
-                          <strong>Link Website</strong> : <label id="brandsLinkMain">Link Website</label><br>
+                          <strong>Link Website</strong> : <label id="brandsLinkMain">Link Website</label>
                         </div>
                       </div>
-                    <div class="row">
+                    <div class="row mb-2">
                       <div class="col-6">
-                        <strong>Created at</strong> : <label id="brandsCreatedAt">Created At</label><br>
+                        <strong>Created at</strong> : <label id="brandsCreatedAt">Created At</label>
                       </div>
                       <div class="col-6">
-                        <strong>Updated at</strong> : <label id="brandsUpdatedAt">Updated At</label><br>
+                        <strong>Updated at</strong> : <label id="brandsUpdatedAt">Updated At</label>
                       </div>
                     </div>
                     <br>
@@ -220,6 +229,9 @@
 
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
     $(document).on('click', '.view-btn', function () {
       let dataId = $(this).data('id');
@@ -227,17 +239,17 @@
       let dataSet = JSON.parse(jsonDataSet);
       let data = dataSet.find(d => d.id === dataId);
       if (data) {
-        document.getElementById('brandsNameEN').innerText = data.nameEN;
-        document.getElementById('brandsNameTH').innerText = data.nameTH;
-        document.getElementById('brandsCode').innerText = data.code;
-        document.getElementById('brandsKeyword').innerText = data.keyword;
-        document.getElementById('brandsShortKeyword').innerText = data.shortKeyword;
-        document.getElementById('brandsLinkMain').innerText = data.linkMain;
-        document.getElementById('brandsNo').innerText = data.no;
+        document.getElementById('brandsNameEN').innerText = data.nameEN ? data.nameEN : '-';
+        document.getElementById('brandsNameTH').innerText = data.nameTH ? data.nameTH : '-';
+        document.getElementById('brandsCode').innerText = data.code ? data.code : '-';
+        document.getElementById('brandsKeyword').innerText = data.keyword ? data.keyword : '-';
+        document.getElementById('brandsShortKeyword').innerText = data.shortKeyword ? data.shortKeyword : '-';
+        document.getElementById('brandsLinkMain').innerText = data.linkMain ? data.linkMain : '-';
+        document.getElementById('brandsNo').innerText = data.no ? data.no : '-';
         document.getElementById('brandsImg').src = data.img ? `/uploads/brands/${data.img}` : '/img/NoPic.svg';
         document.getElementById('brandsCreatedAt').innerText = data.createdAt ? formatForDatetimeLocal(data.createdAt) : '-';
         document.getElementById('brandsUpdatedAt').innerText = data.updatedAt ? formatForDatetimeLocal(data.updatedAt) : '-';
-        document.getElementById('brandsDate').innerText = data.year ? formatForDate(data.year) : '-';
+        document.getElementById('brandsDate').innerText = data.year ? data.year : '-';
       }
     });
 
@@ -258,6 +270,25 @@
       const dd = date.substring(8, 10);
       return `${dd}/${mm}/${yyyy}`;
     }
+
+    function showSaveSuccess() {
+    Swal.fire({
+      icon: 'success',           // แสดงไอคอนสำเร็จ (เครื่องหมายถูก)
+      title: 'ลบข้อมูลสำเร็จ!',
+      text: 'ข้อมูลถูกลบจากระบบเรียบร้อยแล้ว',
+      toast: true,               // ทำให้เป็น Toast Notification ขนาดเล็ก
+      position: 'top-end',       // แสดงที่มุมบนขวา
+      showConfirmButton: false,  // ไม่แสดงปุ่ม OK
+      timer: 2500,               // แสดงนาน 2.5 วินาที แล้วหายไปเอง
+      timerProgressBar: true     // แสดงแถบความคืบหน้า
+    });
+}
+
+// 1. หาปุ่มจาก ID
+    const button = document.getElementById('btnBrandsDel');
+
+    // 2. ผูกฟังก์ชัน showSaveSuccess เข้ากับเหตุการณ์ 'click'
+    button.addEventListener('click', showSaveSuccess);
 
   </script>
 </body>

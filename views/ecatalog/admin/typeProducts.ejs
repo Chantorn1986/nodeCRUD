@@ -147,32 +147,38 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-6">
-                          <strong>No</strong> : <label id="typeProductsNo">-</label><br>
-                          <strong>Code</strong> : <label id="typeProductsCode">-</label><br>
-                          <strong>Name (TH)</strong> : <label id="typeProductsNameTH">-</label><br>
+                          <div class="mb-2">
+                            <strong>No</strong> : <label id="typeProductsNo">-</label>
+                          </div>
+                          <div class="mb-2">
+                            <strong>Code</strong> : <label id="typeProductsCode">-</label>
+                          </div>
+                          <div class="mb-2">
+                            <strong>Name (TH)</strong> : <label id="typeProductsNameTH">-</label>
+                          </div>                          
                         </div>
                         <div class="col-6">
-                          <strong>Image</strong> : <img id="typeProductsImg" class="img" src="" width="100" /><br>
+                          <strong>Image</strong> : <img id="typeProductsImg" class="img" src="" width="100" />
                         </div>
                       </div>
                       <div class="row mb-2">
                         <div class="col-12">
-                          <strong>Keyword</strong> : <label id="typeProductsKeyword">-</label><br>
+                          <strong>Keyword</strong> : <label id="typeProductsKeyword">-</label>
                         </div>
 
                       </div>
                       <div class="row mb-2">
                         <div class="col-12">
-                          <strong>Short Keyword</strong> : <label id="typeProductsShortKeyword">-</label><br>
+                          <strong>Short Keyword</strong> : <label id="typeProductsShortKeyword">-</label>
                         </div>
 
                       </div>
-                      <div class="row">
+                      <div class="row mb-2">
                         <div class="col-6">
-                          <strong>Created at</strong> : <label id="typeProductsCreatedAt">-</label><br>
+                          <strong>Created at</strong> : <label id="typeProductsCreatedAt">-</label>
                         </div>
                         <div class="col-6">
-                          <strong>Updated at</strong> : <label id="typeProductsUpdatedAt">-</label><br>
+                          <strong>Updated at</strong> : <label id="typeProductsUpdatedAt">-</label>
                         </div>
                       </div>
                       <br>
@@ -224,12 +230,12 @@
           let dataSet = JSON.parse(jsonDataSet);
           let data = dataSet.find(d => d.id === dataId);
           if (data) {
-            document.getElementById('typeProductsNameEN').innerText = data.nameEN;
-            document.getElementById('typeProductsNameTH').innerText = data.nameTH;
-            document.getElementById('typeProductsCode').innerText = data.code;
-            document.getElementById('typeProductsKeyword').innerText = data.keyword;
-            document.getElementById('typeProductsShortKeyword').innerText = data.shortKeyword;
-            document.getElementById('typeProductsNo').innerText = data.no;
+            document.getElementById('typeProductsNameEN').innerText = data.nameEN ? data.nameEN : '-';
+            document.getElementById('typeProductsNameTH').innerText = data.nameTH ? data.nameTH : '-';
+            document.getElementById('typeProductsCode').innerText = data.code ? data.code : '-';
+            document.getElementById('typeProductsKeyword').innerText = data.keyword ? data.keyword : '-';
+            document.getElementById('typeProductsShortKeyword').innerText = data.shortKeyword ? data.shortKeyword : '-';
+            document.getElementById('typeProductsNo').innerText = data.no ? data.no : '-';
             document.getElementById('typeProductsImg').src = data.img ? `/uploads/typeProducts/${data.img}` : '/img/NoPic.svg';
             document.getElementById('typeProductsCreatedAt').innerText = data.createdAt ? formatForDatetimeLocal(data.createdAt) : '-';
             document.getElementById('typeProductsUpdatedAt').innerText = data.updatedAt ? formatForDatetimeLocal(data.updatedAt) : '-';

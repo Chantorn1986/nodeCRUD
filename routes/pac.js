@@ -6,6 +6,10 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const {getAllUser,getAddUser,postAddUser,getEditUser,postEditUser,getDelUser} = require('../controllers/pac/admin/user')
+const {isAuthenticated,ifLoggedIn} = require('../middlewares/auth')
+const {getHome,getLogout,postLogin} = require('../controllers/pac/login')
+
+router.get('/home', isAuthenticated,getHome)
 
 router.get('/', (req, res) => {
     res.render('pac/user/index', { title: 'PAC' });

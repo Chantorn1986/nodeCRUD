@@ -27,17 +27,17 @@
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
+  <div id="wrapper">
 
-      <%- include('../../tabBar/pacLeftSide'); %>
+    <%- include('../../tabBar/pacLeftSide'); %>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
 
-          <!-- Main Content -->
-          <div id="content">
+        <!-- Main Content -->
+        <div id="content">
 
-            <%- include('../../tabBar/pacTopbar'); %>
+          <%- include('../../tabBar/pacTopbar'); %>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -54,7 +54,7 @@
                   <h6 class="m-0 font-weight-bold text-primary align-content-center">PAC Admin - <%= title %>
                   </h6>
                   <!--<a href="/tablesAdd" class="btn btn-info btn-circle btn-sm ml-auto"><i class="fas fa-plus"></i></a>-->
-                  <a href="/pac/conf/user/Add" class="btn btn-primary btn-icon-split ml-auto btn-sm">
+                  <a href="/pac/user/Add" class="btn btn-primary btn-icon-split ml-auto btn-sm">
                     <span class="icon text-white-50">
                       <i class="fas fa-plus-circle"></i>
                     </span>
@@ -95,7 +95,7 @@
                             <td class="align-middle">
                               <%= result.email %>
                             </td>
-                            <td class="align-middle"> 
+                            <td class="align-middle">
                               <%= result.role %>
                             </td>
                             <td class="align-middle">
@@ -105,14 +105,12 @@
                               <%= result.updatedAt %>
                             </td>
                             <td class="align-middle">
-                              
+
                             </td>
                             <td class="align-middle">
-
-                              <a href="/pac/conf/user/Edit/<%= result.id %>"
-                                class="btn btn-warning btn-circle btn-sm">
+                              <a href="/pac/user/Edit/<%= result.id %>" class="btn btn-warning btn-circle btn-sm">
                                 <i class="fas fa-pen"></i></a>
-                              <a href="/pac/conf/user/Del/<%= result.id %>" class="btn btn-danger btn-circle btn-sm"
+                              <a href="/pac/user/Del/<%= result.id %>" class="btn btn-danger btn-circle btn-sm"
                                 onclick="return confirm('Do you want to delete the data?');">
                                 <i class="fas fa-trash-alt"></i></a>
                             </td>
@@ -129,35 +127,35 @@
 
             <!-- End of Main Content -->
 
-          </div>
-          <!-- End of Content Wrapper -->
-            <!-- Footer -->
-            <%- include('../../tabBar/pacFooter'); %>
-              <!-- End of Footer -->
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
+        <!-- Footer -->
+        <%- include('../../tabBar/pacFooter'); %>
+          <!-- End of Footer -->
+      </div>
+      <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#">
-          <i class="fas fa-angle-up"></i>
-        </a>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#">
+        <i class="fas fa-angle-up"></i>
+      </a>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="/vendor/jquery/jquery.min.js"></script>
-        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="/js/sb-admin-2.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+      <!-- Page level plugins -->
+      <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="/js/demo/datatables-demo.js"></script>
+      <!-- Page level custom scripts -->
+      <script src="/js/demo/datatables-demo.js"></script>
 
 </body>
 

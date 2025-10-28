@@ -7,14 +7,12 @@ const jwt = require("jsonwebtoken");
 exports.getAllUser = async (req, res) => {
   try {
     const sqlGetAll = "SELECT `id`, `name`, `email`, `password`, `role`, DATE_FORMAT(`createdAt`, '%d/%m/%Y %H:%i:%s') as `createdAt`,DATE_FORMAT(`updatedAt`, '%d/%m/%Y %H:%i:%s') as `updatedAt` FROM `user` ";
-    await db.execute(sqlGetAll, (err, results) => {
-      if (err) throw err;
+    const [results] = await db.execute(sqlGetAll);
       res.render('pac/admin/user', {
         title: 'User Management',
         results: results,
         resultsJson: JSON.stringify(results)
       });
-    });
   } catch (err) {
     console.error('Error list data :', err)
     res.status(500).json({ error: 'List brands invalid.' })
@@ -41,19 +39,13 @@ exports.postAddUser = async (req, res) => {
     const hashPassword = await bcrypt.hashSync(userPassword, 10);
     const timestamp = moment(new Date()).format()
     await db.execute(sqlInsert,
-      [ userName, userEmail, hashPassword, userRole, timestamp]
-      , (err, resultAdd) => {
-        if (err) throw err;
-        return;
-      });
-    await db.execute(sqlGetAll, (err, results) => {
-      if (err) throw err;
+      [ userName, userEmail, hashPassword, userRole, timestamp]);
+    const [results] = await db.execute(sqlGetAll);
       res.render('pac/admin/user', {
         title: 'User Management',
         results: results,
         resultsJson: JSON.stringify(results)
       });
-    });
   } catch (err) {
     console.error('Error post data :', err)
     res.status(500).json({ error: 'Post create user invalid.' })
@@ -91,30 +83,20 @@ exports.postEditUser = async (req, res) => {
     if(userPasswordE){
       const hashPassword = await bcrypt.hashSync(userPasswordE, 10);
       await db.execute(sqlUpdate,
-      [userNameE, userEmailE, hashPassword, userRoleE,timestamp , req.params.id]
-      , (err, resultUpdate) => {
-        if (err) throw err;
-        return;
-      });
+      [userNameE, userEmailE, hashPassword, userRoleE,timestamp , req.params.id] );
     }else{
       const sqlUpdate_NoPW = "UPDATE `user` SET `name`=?,`email`=?,`role`=?,`updatedAt`=? WHERE `id` = ?"
     await db.execute(sqlUpdate_NoPW,
-      [userNameE, userEmailE, userRoleE,timestamp , req.params.id]
-      , (err, resultUpdate) => {
-        if (err) throw err;
-        return;
-      });
+      [userNameE, userEmailE, userRoleE,timestamp , req.params.id] );
     }
 
     const sqlGetAll = "SELECT `id`, `name`, `email`, `password`, `role`, DATE_FORMAT(`createdAt`, '%d/%m/%Y %H:%i:%s') as `createdAt`,DATE_FORMAT(`updatedAt`, '%d/%m/%Y %H:%i:%s') as `updatedAt` FROM `user` ";
-    await db.execute(sqlGetAll, (err, results) => {
-      if (err) throw err;
+    const [results] = await db.execute(sqlGetAll);
       res.render('pac/admin/user', {
         title: 'User Management',
         results: results,
         resultsJson: JSON.stringify(results)
       });
-    });
   } catch (err) {
     console.error('Error get data :', err)
     res.status(500).json({ error: 'Get update user invalid.' })
@@ -124,21 +106,14 @@ exports.postEditUser = async (req, res) => {
 exports.getDelUser = async (req, res) => {
   try {
     const sqlDelete = "DELETE FROM `user` WHERE `id` = ?"
-    await db.execute(sqlDelete,
-      [req.params.id]
-      , (err, resultDel) => {
-        if (err) throw err;
-        return;
-      });
+    await db.execute(sqlDelete, [req.params.id] );
     const sqlGetAll = "SELECT `id`, `name`, `email`, `password`, `role`, DATE_FORMAT(`createdAt`, '%d/%m/%Y %H:%i:%s') as `createdAt`,DATE_FORMAT(`updatedAt`, '%d/%m/%Y %H:%i:%s') as `updatedAt` FROM `user` ";
-    await db.execute(sqlGetAll, (err, results) => {
-      if (err) throw err;
+    const [results] = await db.execute(sqlGetAll);
       res.render('pac/admin/user', {
         title: 'User Management',
         results: results,
         resultsJson: JSON.stringify(results)
       });
-    });
   } catch (err) {
     console.error('Error get remove data :', err)
     res.status(500).json({ error: 'Get remove user invalid.' })

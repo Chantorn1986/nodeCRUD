@@ -11,6 +11,7 @@ exports.getAllUser = async (req, res) => {
     res.render('pac/admin/user', {
       title: 'User Management',
       results: results,
+      user: req.session.user,
       resultsJson: JSON.stringify(results)
     });
   } catch (err) {
@@ -23,6 +24,7 @@ exports.getAddUser = async (req, res) => {
   try {
     res.render('pac/admin/userAdd', {
       title: 'User Creact',
+      user: req.session.user,
       updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss')
     });
   } catch (err) {
@@ -44,6 +46,7 @@ exports.postAddUser = async (req, res) => {
     res.render('pac/admin/user', {
       title: 'User Management',
       results: results,
+      user: req.session.user,
       resultsJson: JSON.stringify(results)
     });
   } catch (err) {
@@ -64,6 +67,7 @@ exports.getEditUser = async (req, res) => {
     res.render('pac/admin/userEdit', {
       title: 'User Edit',
       result: result[0],
+      user: req.session.user,
       coverDate: coverDate
     });
   } catch (err) {
@@ -92,6 +96,7 @@ exports.postEditUser = async (req, res) => {
     res.render('pac/admin/user', {
       title: 'User Management',
       results: results,
+      user: req.session.user,
       resultsJson: JSON.stringify(results)
     });
   } catch (err) {
@@ -109,6 +114,7 @@ exports.getDelUser = async (req, res) => {
     res.render('pac/admin/user', {
       title: 'User Management',
       results: results,
+      user: req.session.user,
       resultsJson: JSON.stringify(results)
     });
   } catch (err) {

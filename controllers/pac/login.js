@@ -14,8 +14,8 @@ async function comparePassword(password, storedHash) {
 
 exports.getHome = async (req, res) => {
   try {
-    const results = await db.findAll();
-    res.render('pac/admin/index', {
+    // const results = await db.findAll();
+    res.render('pac/home', {
       title: 'Home',
       products: results,
       user: req.session.user
@@ -41,9 +41,7 @@ exports.postLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const sqlGetMail = "SELECT `id`, `name`, `email`, `password`, `role`, DATE_FORMAT(`createdAt`, '%d/%m/%Y %H:%i:%s') as `createdAt`,DATE_FORMAT(`updatedAt`, '%d/%m/%Y %H:%i:%s') as `updatedAt` FROM `user` WHERE `email` = ?";
-    await db.execute(sqlGetMail,
-      [email], (err, result) => {
-        if (err) throw err;
+    const [result] = await db.execute(sqlGetMail,[email])
         if (result) {
           const isCorrect = comparePassword(password, result.password);
           if (isCorrect) {
@@ -58,28 +56,26 @@ exports.postLogin = async (req, res) => {
               // nameTH: employee.nameTH,
               // depName: department.nameTH
             }
-            console.log(isCorrect)
             req.session.user = profileSessions;
-            res.render('pac/admin/index', {
+            res.render('pac/home', {
               title: 'Home',
               user: profileSessions,
               dataAlert: null,
               lengthAlert: 0
             });
           } else {
-            res.render('/login', {
+            res.render('/pac/login', {
               title: 'login',
               error_msg: "Password ไม่ถูกต้อง!!"
             });
           }
         } else {
-          return res.render('/login', {
+          return res.render('/pac/login', {
             success: false,
             title: 'login',
             error_msg: "Email ไม่ถูกต้องกรุณากรอก email ใหม่ !!!"
           });
         }
-      });
   } catch (err) {
     console.error('Error login :', err)
     res.status(500).json({ error: 'Login invalid.' })

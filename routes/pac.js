@@ -15,16 +15,19 @@ router.get('/', (req, res) => {
     res.render('pac/user/index', { title: 'PAC' });
 });
 
-router.get('/admin', (req, res) => {
-  res.render('pac/admin/index', { title: 'PAC Admin' });
+router.get('/admin',isAuthenticated, (req, res) => {
+  res.render('pac/admin/index', { 
+    title: 'PAC Admin' ,
+    user: req.session.user
+  });
 });
 
-router.get('/user', getAllUser);
-router.get('/user/Add', getAddUser);
-router.post('/user/Add',postAddUser);
-router.get('/user/Edit/:id', getEditUser);
+router.get('/user',isAuthenticated, getAllUser);
+router.get('/user/Add',isAuthenticated, getAddUser);
+router.post('/user/Add',isAuthenticated,postAddUser);
+router.get('/user/Edit/:id',isAuthenticated, getEditUser);
 router.post('/user/Edit/:id',postEditUser);
-router.get('/user/Del/:id', getDelUser);
+router.get('/user/Del/:id',isAuthenticated, getDelUser);
 
 
 

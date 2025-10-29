@@ -9,6 +9,7 @@ exports.getAllDepartment = async (req, res) => {
       res.render('pac/hrm/department', {
         title: 'Department Management',
         results: results,
+        user: req.session.user,
         resultsJson: JSON.stringify(results)
       });
   } catch (err) {
@@ -24,6 +25,7 @@ exports.getAddDepartment = async (req, res) => {
     res.render('pac/hrm/departmentAdd', {
       title: 'Department Creact',
       maxNo: result[0]['max'] + 1,
+      user: req.session.user,
       updatedAt: moment(new Date()).format('DD/MM/YYYY HH:mm:ss')
     });
   } catch (err) {
@@ -44,6 +46,7 @@ exports.postAddDepartment = async (req, res) => {
       res.render('pac/hrm/department', {
         title: 'Department Management',
         results: results,
+        user: req.session.user,
         resultsJson: JSON.stringify(results)
       });
   } catch (err) {
@@ -64,6 +67,7 @@ exports.getEditDepartment= async (req, res) => {
         res.render('pac/hrm/departmentEdit', {
           title: 'Department Edit',
           result: result[0],
+          user: req.session.user,
           coverDate: coverDate
         });
   } catch (err) {
@@ -84,6 +88,7 @@ exports.postEditDepartment = async (req, res) => {
       res.render('pac/hrm/department', {
         title: 'Department Management',
         results: results,
+        user: req.session.user,
         resultsJson: JSON.stringify(results)
       });
   } catch (err) {
@@ -101,6 +106,7 @@ exports.getDelDepartment = async (req, res) => {
       res.render('pac/hrm/department', {
         title: 'Department Management',
         results: results,
+        user: req.session.user,
         resultsJson: JSON.stringify(results)
       });
   } catch (err) {

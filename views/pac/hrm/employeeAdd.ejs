@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>PAC APP - <%= title %>
+  </title>
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+  <div id="wrapper">
+
+    <%- include('../../tabBar/pacLeftSide'); %>
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+          <%- include('../../tabBar/pacTopbar'); %>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid mt-4 mb-4">
+              <div class="card o-hidden border-0 shadow-lg ">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary align-content-center">PAC HRM - <%= title %>
+                  </h6>
+                </div>
+                <div class="card-body p-0">
+                  <!-- Nested Row within Card Body -->
+                  <div class="row">
+                    <!--<div class="col-lg-2 d-none d-lg-block"></div>-->
+                    <div class="col-lg-12">
+                      <div class="p-4">
+                        <form class="user" action="/hrm/employee/Add" enctype="multipart/form-data" method="post">
+                          <div class="form-group row">
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeUser" class="form-label">Email</label>
+                              <select name="employeeUser" class="form-control form-select"
+                                aria-label="Default select example" id="employeeUser">
+                                <option value="">--- Select User ---</option>
+                                <% user.forEach(user=> { %>
+                                  <option value="<%= user.id %>">
+                                    <%= user.email %>
+                                  </option>
+                                  <% }) %>
+                              </select>
+                            </div>
+                            <div class="col-sm-2 mb-3 mb-sm-0">
+                              <label for="employeeCode" class="form-label">Code</label>
+                              <input type="text" class="form-control" name="employeeCode" id="employeeCode">
+                            </div>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                              <label for="employeeDepartmentId" class="form-label">Department</label>
+                              <select name="employeeDepartmentId" class="form-control form-select"
+                                id="employeeDepartmentId" aria-label="Default select example">
+                                <option value="">--- Select Department ---</option>
+                                <% department.forEach(department=> { %>
+                                  <option value="<%= department.id %>">
+                                    <%= department.nameEN %>
+                                  </option>
+                                  <% }) %>
+                              </select>
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="file" class="form-label">Image</label>
+                              <input type="file" name="file" class="form-control-file">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="col-sm-2 mb-3 mb-sm-0">
+                              <label for="employeeSerialNo" class="form-label">Serial No.</label>
+                              <input type="text" class="form-control text-right" name="employeeSerialNo"
+                                id="employeeSerialNo">
+                            </div>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                              <label for="employeePositionId" class="form-label">Position</label>
+                              <select name="employeePositionId" class="form-control form-select"
+                                aria-label="Default select example">
+                                <option value="">--- Select Position ---</option>
+                                <% position.forEach(position=> { %>
+                                  <option value="<%= position.id %>">
+                                    <%= position.nameEN %>
+                                  </option>
+                                  <% }) %>
+                              </select>
+                            </div>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                              <label for="employeeWorkLevelId" class="form-label">Work Level</label>
+                              <select name="employeeWorkLevelId" class="form-control form-select"
+                                aria-label="Default select example" id="employeeWorkLevelId">
+                                <option value="">--- Select Work Level ---</option>
+                                <% worklevel.forEach(worklevel=> { %>
+                                  <option value="<%= worklevel.id %>">
+                                    <%= worklevel.nameEN %>
+                                  </option>
+                                  <% }) %>
+                              </select>
+                            </div>
+                            <div class="col-sm-2 mb-3 mb-sm-0">
+                              <label for="employeeLevel" class="form-label">Level</label>
+                              <input type="number" class="form-control" name="employeeLevel" id="employeeLevel">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                              <label for="employeeNameTH" class="form-label">Name TH</label>
+                              <input type="text" class="form-control" name="employeeNameTH" required>
+                            </div>
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                              <label for="employeeNameEN" class="form-label">Name EN</label>
+                              <input type="text" class="form-control" name="employeeNameEN" required>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeNickname" class="form-label">Nickname</label>
+                              <input type="text" class="form-control" name="employeeNickname">
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeMobile" class="form-label">Mobile</label>
+                              <input type="text" class="form-control text-right" name="employeeMobile">
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employmentType" class="form-label">Employment Type</label>
+                              <select name="employmentType" class="form-control form-select"
+                                aria-label="Default select example">
+                                <option value="">--- Select Employment Type ---</option>
+                                <option value="Casual">Casual</option>
+                                <option value="Contract">Contract</option>
+                                <option selected value="FullTime">FullTime</option>
+                                <option value="PartTime">PartTime</option>
+                              </select>
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeInternalPhone" class="form-label">Internal Phone</label>
+                              <input type="text" class="form-control text-right" name="employeeInternalPhone">
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeStartDate" class="form-label">Start Date</label>
+                              <input type="date" class="form-control" name="employeeStartDate" value="<%= dateAt %>">
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeResignation" class="form-label">Resignation</label>
+                              <div>
+                                <input type="radio" id="employeeResignationNo" name="employeeResignation" value="0"
+                                  checked><label
+                                  for="employeeResignationNo">&nbsp;&nbsp;No</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" id="employeeResignationYes" name="employeeResignation"
+                                  value="1"><label for="employeeResignationYes">&nbsp;&nbsp;Yes</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="employeeEndDate" class="form-label">Resignation Date</label>
+                              <input type="date" class="form-control" name="employeeEndDate" id="employeeEndDate"
+                                disabled>
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                              <label for="reasonForLeaving" class="form-label">Reason for Leaving</label>
+                              <input type="text" class="form-control" name="reasonForLeaving" id="reasonForLeaving"
+                                disabled>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                              <label for="createdAt" class="form-label">Created at</label>
+                              <input type="text" class="form-control" name="createdAt" value="<%= updatedAt %>"
+                                readonly>
+                            </div>
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                              <label for="userUpdatedAt" class="form-label">Updated at</label>
+                              <input type="text" class="form-control" name="userUpdatedAt" value="<%= updatedAt %>"
+                                readonly>
+                            </div>
+                          </div>
+                          <br>
+                          <button type="submit" class="btn btn-success btn-block">
+                            <i class="fas fa-save fa-fw"></i>
+                            <span class="text">Save</span></button>
+
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                          <a class="small" href="/hrm/employee">Back to ...</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--<div class="col-lg-2 d-none d-lg-block"></div>-->
+              </div>
+              <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <%- include('../../tabBar/pacFooter'); %>
+              <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+      </div>
+      <!-- End of Page Wrapper -->
+
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#">
+        <i class="fas fa-angle-up"></i>
+      </a>
+
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin-2.min.js"></script>
+
+      <!-- Page level plugins -->
+      <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+      <!-- Page level custom scripts  level -->
+      <script src="/js/demo/datatables-demo.js"></script>
+      <script>
+
+        let jsonDataSetUser = `<%- JSON.stringify(user) %>`;
+        let dataSetUser = JSON.parse(jsonDataSetUser);
+        const ddEmployeeUser = document.getElementById('employeeUser');
+        const tbEmployeeCode = document.getElementById('employeeCode');
+        ddEmployeeUser.addEventListener('change', function () {
+          const selectedValue = ddEmployeeUser.value;
+          let data = dataSetUser.find(d => d.id === selectedValue);
+          tbEmployeeCode.value = data.name ? data.name : '';
+        });
+
+        let jsonDataSetWorkLevel = `<%- JSON.stringify(worklevel) %>`;
+        let dataSetWorkLevel = JSON.parse(jsonDataSetWorkLevel);
+        const ddEmployeeWorkLevel = document.getElementById('employeeWorkLevelId');
+        const tbEmployeeLevel = document.getElementById('employeeLevel');
+        ddEmployeeWorkLevel.addEventListener('change', function () {
+          const selectedValue = ddEmployeeWorkLevel.value;
+          let data = dataSetWorkLevel.find(d => d.id === selectedValue);
+          tbEmployeeLevel.value = parseInt(data.level) ? parseInt(data.level) : 1;
+        });
+
+        let jsonDDSdepartment = `<%- JSON.stringify(department) %>`;
+        let ddsDepartment = JSON.parse(jsonDDSdepartment);
+        const ddEmployeeDepartment = document.getElementById('employeeDepartmentId');
+        const tbEmployeeSerialNo = document.getElementById('employeeSerialNo');
+        ddEmployeeDepartment.addEventListener('change', function () {
+          const selectedValue = ddEmployeeDepartment.value;
+          let data = ddsDepartment.find(d => d.id === selectedValue);
+          let SN = (new Date().toLocaleDateString('th-TH', { year: '2-digit' })).substr(5) + "0" + data.no;
+          tbEmployeeSerialNo.value = SN;
+        });
+
+        // 1. ดึง Radio Button ทุกตัวในกลุ่ม "Radio"
+        const radioButtons = document.querySelectorAll('input[name="employeeResignation"]');
+        const tbEmployeeEndDate = document.getElementById('employeeEndDate'); // สมมติว่านี่คือ Textbox ของคุณ
+        const tbReasonForLeaving = document.getElementById('reasonForLeaving'); // สมมติว่านี่คือ Textbox ของคุณ
+        // 2. วนลูปเพื่อเพิ่ม Event Listener ให้กับทุกปุ่ม
+        radioButtons.forEach(radio => {
+          radio.addEventListener('change', function () {
+            // 'this' ในที่นี้คือปุ่ม Radio ที่ถูกเลือก/เปลี่ยนสถานะ
+            const selectedValue = this.value;
+            if (selectedValue === '1') {
+              tbReasonForLeaving.disabled = false; // เปิดใช้งาน Textbox
+              tbReasonForLeaving.focus()
+              tbEmployeeEndDate.disabled = false;
+            } else {
+              tbReasonForLeaving.disabled = true;
+              tbEmployeeEndDate.disabled = true;
+            }
+          });
+        });
+
+      </script>
+
+</body>
+
+</html>

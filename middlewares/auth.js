@@ -30,7 +30,7 @@ exports.isAuthenticated = async (req, res, next) => {
     if (req.session.user) {
       return next();
     } else {
-      res.redirect('/login');
+      res.redirect('/logIO');
     }
   } catch (err) {
     console.log(err)
@@ -42,7 +42,7 @@ exports.isAuthenticated = async (req, res, next) => {
 exports.ifLoggedIn = async (req, res, next) => {
   try {
     if (req.session.user) {
-      return res.redirect('/home');
+      return res.redirect('/pac/home');
     }
     next();
   } catch (err) {

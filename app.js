@@ -13,7 +13,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'nodesecret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+        maxAge: 1000 * 60 * 60 * 24 // กำหนดอายุ cookie (เช่น 1 วัน)
+    }
 }))
 
 
